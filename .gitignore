@@ -4,7 +4,6 @@
 /PINNsEnv
 /Reports
 /ss
-/trained_pinn_cyl.pth
 /trained_pinn_cyl_lbfgs.pth
 /trained_pinn_cyl_lbfgs_lr_0.01.pth
 /trained_pinn_cyl_lbfgs_lr_0.1.pth
