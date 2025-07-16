@@ -1,0 +1,46 @@
+PINN Report
+The problem: 2D flow around a cylinder in a channel.
+
+===================================
+Network Configuration
+Number of hidden layers: None
+Number of neurons per hidden layer: 60
+Activation function: Tanh()
+Other notes:Branched network. Hidden layers 3 shared + 7/9 in each branch (velocity/pressure). Velocity branch has 2 relu 5 tanh activations, the relu in the middle, pressure all tanh. Input normalization and normalized momentum loss, Xavier initialization.
+===================================
+The Domain
+Number of collocation points: 98304
+Wall Boundary points: 1000
+Inlet Boundary points: 200
+Outlet Boundary points: 200
+The total length: 1.0
+The inlet height: 0.2
+Other notes:Cylinder info: center at x=0.2, y=0, radius=0.05, number of boundary wall points=100. batches over collocation points, num_batch 16384
+===================================
+The Boundary Conditions and Loss
+Inlet Boundary Type: Velocity inlet
+Maximum Velocity: 1.0
+Velocity Profile: Parabolic velocity profile: U_max * (1 - (y/h0)^2)
+Wall Boundary Type: No-slip
+Outlet Boundary Type: Pressure outlet
+Dynamic Viscosity: 0.001
+Density of Fluid: 1000.0
+Reynolds number: 5
+Other notes:Loss branched, inlet, walls, and continuity to velocity, outlet to pressure, momentum to all. Loss  MSE.
+===================================
+Training Summary
+Epochs: 0 to 30000 (total: 30001)
+Optimizer: Adam
+Initial learning rate: 0.001
+Scheduled Learning rate drop: 5000
+Scheduler gamma: 0.5
+X-Momentum Loss Lambda: 1.0
+Y-Momentum Loss Lambda: 2.0
+Continuity Loss Lambda: 1.0
+Wall Boundary Loss Lambda: 2.0
+Outlet Loss Lambda: 3.0
+Inlet Loss Lambda: 1.0
+Other notes:Scheduler: StepLR, gradient clipping. Velocity and common branches same initial learning rate, pressure is 0.0005, betas=(0.89, 0.98). 
+
+===================================
+Any other notes at all?

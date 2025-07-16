@@ -1,0 +1,4 @@
+Inlet max velocity: 0.9904199242591858
+Outlet max pressure: 0.0009482972091063857
+Wall top max velocity: 0.015575341880321503
+Wall bottom max velocity: 0.012601661495864391
