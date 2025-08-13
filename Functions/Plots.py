@@ -202,8 +202,7 @@ def predict_and_quiver(model, device, sections, x_vals_total, h_total, density=1
 
     return fig
 
-def plot_residuals(model, device, mu, x_range, y_range, x_points, y_points,
-                   x_y_inlet=None, x_y_outlet=None, x_y_top=None, x_y_bottom=None):
+def plot_residuals(model, device, mu, x_range, y_range, x_points, y_points):
     """
     Plots residuals (momentum x, momentum y, continuity) and boundary results for a given model.
 
@@ -365,7 +364,7 @@ def plot_velocity_profiles(model, device, x_vals_total, h_total, L_total, x_y_in
     ax.legend()
     return fig
 
-def validation_by_flux(model, x_vals_total, h_total, L_total):
+def validation_by_flux(model, x_vals_total, h_total, U_max):
     """
     Computes and prints the volumetric flow rate at the inlet and outlet.
 
@@ -378,8 +377,8 @@ def validation_by_flux(model, x_vals_total, h_total, L_total):
     Returns:
         None: Prints the volumetric flow rates at the inlet and outlet, and their relative difference.
     """
-    x_inlet = 0.0
-    x_outlet = L_total
+    x_inlet = x_vals_total.min().item()
+    x_outlet = x_vals_total.max().item()
 
     h_inlet = np.interp(x_inlet, x_vals_total, h_total)
     h_outlet = np.interp(x_outlet, x_vals_total, h_total)
@@ -398,12 +397,16 @@ def validation_by_flux(model, x_vals_total, h_total, L_total):
     Q_in = compute_flux(model, x_fixed=x_inlet, y_min=-h_inlet, y_max=h_inlet)
     Q_out = compute_flux(model, x_fixed=x_outlet, y_min=-h_outlet, y_max=h_outlet)
 
+    Q_in_analytical = (4 / 3) * U_max * (h_total)
+
     print(f"Volumetric flow rate at inlet:  {Q_in:.6f}")
     print(f"Volumetric flow rate at outlet: {Q_out:.6f}")
     print(f"Relative difference: {abs(Q_in - Q_out) / abs(Q_in):.2%}")
+    print(f"Volumetric flow rate analytical for pipe flow: {Q_in_analytical[0]}")
+
 
 def predict_and_plot_on_collocation(model, device, x_y_collocation, x_y_inlet, x_y_outlet, x_y_top, x_y_bottom, x_y_cylinder,
-                                    x_vals_total, h_total, min_vel, max_vel, min_pres, max_pres):
+                                    min_vel, max_vel, min_pres, max_pres):
     """
     Plots velocity magnitude and pressure at the collocation points only, with boundary points overlaid.
 
@@ -412,8 +415,6 @@ def predict_and_plot_on_collocation(model, device, x_y_collocation, x_y_inlet, x
         device (torch.device): Device to run the model on.
         x_y_collocation (torch.Tensor): Collocation points [N, 2].
         x_y_inlet, x_y_outlet, x_y_top, x_y_bottom, x_y_cylinder (torch.Tensor): Boundary points.
-        x_vals_total (np.ndarray): x values for nozzle/pipe walls.
-        h_total (np.ndarray): height values for nozzle/pipe walls.
         min_vel, max_vel, min_pres, max_pres: Color scale limits.
     """
     model.eval()
