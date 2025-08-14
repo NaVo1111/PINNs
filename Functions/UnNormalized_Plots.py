@@ -1,3 +1,6 @@
+##################################   Plotting Functions   ########################################
+
+# Import stuff
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -35,8 +38,7 @@ def plot_losses(title, **loss_histories):
 
     return fig
 
-def predict_and_plot(model, device, sections, x_vals_total, h_total, L_total, scale_factor, cylinder_center, cylinder_radius, 
-                     fig_sizes=(5, 2), ymin=-0.6, ymax=0.6, y_density=100, grid_onoff=False):
+def predict_and_plot(model, device, sections, x_vals_total, h_total, L_total, scale_factor, cylinder_center, cylinder_radius, fig_sizes=(5, 2), ymin=-0.6, ymax=0.6, y_density=100, grid_onoff=False):
     """
     Predicts velocity and pressure using a model trained on normalized inputs and plots the results.
 
@@ -59,7 +61,6 @@ def predict_and_plot(model, device, sections, x_vals_total, h_total, L_total, sc
     Returns:
         tuple: Figures for velocity and pressure plots.
     """
-    
     x_center = L_total / 2.0
     y_vals = np.linspace(ymin, ymax, y_density)
     fig1, ax1 = plt.subplots(figsize=fig_sizes)
