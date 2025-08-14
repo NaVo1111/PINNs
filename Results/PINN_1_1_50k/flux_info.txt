@@ -1,3 +1,0 @@
-Volumetric flow rate at inlet:  0.264562
-Volumetric flow rate at outlet: 0.261707
-Relative difference: 1.08%

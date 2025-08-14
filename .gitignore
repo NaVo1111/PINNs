@@ -1,15 +1,11 @@
 /.ipynb_checkpoints
+/_pycache_
 /Function_Tester.ipynb
 /Models with good results
 /PINNsEnv
 /Reports
+/Results
 /ss
-/trained_pinn_cyl.pth
-/trained_pinn_cyl_lbfgs.pth
-/trained_pinn_cyl_lbfgs_lr_0.01.pth
-/trained_pinn_cyl_lbfgs_lr_0.1.pth
-/trained_pinn_cyl_lbfgs_lr_0.5.pth
-/trained_pinn_cyl_lbfgs_lr_1.0.pth
+/Training Montages
 /trained_pinn_pipe.pth
 /trained_pinn_nozzle.pth
-/Training Montages
